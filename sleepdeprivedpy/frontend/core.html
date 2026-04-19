@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RVM PROTOTYPE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" />
+    <script type="text/javascript" src="/eel.js"></script>
+    <script type="text/javascript" src="/helpers.js"></script>
+    <script type="text/javascript" src="/functions.js"></script>
+    <link rel="stylesheet" href="/assets/css/framework.css">
+    <link rel="stylesheet" href="/assets/css/canon.css">
+    <link rel="stylesheet" href="/page1.css">
+    <link rel="stylesheet" href="/page2.css">
+    <link rel="stylesheet" href="/page3.css">
+</head>
+
+<body style="width: 100vw; height: 100vh;" class="">
+
+<div id="page1" class="">
+    <div class="banner1">
+        <img src="assets/img/logo.png" class="logo" alt="Logo" />
+        <div class="project">Sleep Deprivation Detection System</div>
+    </div>
+
+    <div class="page1-body">
+        <div class="page1-left">
+            <div class="system-ready-card">
+                <div class="status-icon">
+                    <i class="fa-solid fa-camera"></i>
+                </div>
+                <div class="status-title">System Ready</div>
+                <div class="status-subtitle">Please enter your Student ID on the right to begin the scan.</div>
+            </div>
+            <img src="assets/img/video.png" alt="" id="page1-video" style="display: none;"/>
+            <div id="page1-timer" style="display: none;">5</div>
+        </div>
+
+        <div class="page1-right">
+            <input
+                id="student-id-display"
+                class="student-id-display"
+                type="text"
+                inputmode="numeric"
+                autocomplete="off"
+                autocapitalize="off"
+                spellcheck="false"
+                aria-label="Student ID"
+                readonly
+                value=""
+            />
+
+            <div class="keypad-grid" aria-label="Keypad">
+                <button class="keypad-btn" type="button" data-key="1">1</button>
+                <button class="keypad-btn" type="button" data-key="2">2</button>
+                <button class="keypad-btn" type="button" data-key="3">3</button>
+                <button class="keypad-btn" type="button" data-key="4">4</button>
+                <button class="keypad-btn" type="button" data-key="5">5</button>
+                <button class="keypad-btn" type="button" data-key="6">6</button>
+                <button class="keypad-btn" type="button" data-key="7">7</button>
+                <button class="keypad-btn" type="button" data-key="8">8</button>
+                <button class="keypad-btn" type="button" data-key="9">9</button>
+
+                <button class="keypad-btn keypad-btn-danger keypad-btn-wide" type="button" data-action="backspace" aria-label="Backspace">
+                    <i class="fa-solid fa-delete-left"></i>
+                </button>
+                <button class="keypad-btn" type="button" data-key="0">0</button>
+                <button class="keypad-btn" type="button" data-key="-">-</button>
+            </div>
+
+            <button class="start-scan" type="button" onclick="onStartScan()">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Start Scan</span>
+            </button>
+        </div>
+    </div>
+</div>
+<div id="page2" class="invisible">
+    <div class="banner1">
+        <img src="assets/img/logo.png" class="logo" alt="Logo" />
+        <div class="project">Sleep Deprivation Detection System</div>
+    </div>
+
+    <div class="abs t15 l0 w100 h85">
+        <div class="abs t0 l0 w100 h100 flex-x jy-space-evenly an-center">
+            <!-- Left: Result Card -->
+            <div class="card w46 h85 flex-y jy-start an-center">
+                <div class="page2-card-title">
+                    Scan Result for:
+                    <span id="page2-student-id" class="page2-student-id">2022-2-01849</span>
+                </div>
+
+                <div class="page2-photo-frame">
+                    <img
+                        id="page2-face"
+                        src="assets/img/video.png?x=1"
+                        alt="Captured face"
+                        class="page2-photo"
+                    />
+                </div>
+
+                <div class="page2-result-row">
+                    <i id="page2-warn-icon" class="fa-solid fa-triangle-exclamation page2-warn-icon"></i>
+                    <div id="page2-result" class="page2-result-text">Sleep Deprived</div>
+                </div>
+
+                <div class="page2-confidence">
+                    Confidence:
+                    <span id="page2-confidence">93%</span>
+                </div>
+            </div>
+
+            <!-- Right: Web Report Card -->
+            <div class="card w46 h85 flex-y jy-start an-center">
+                <div class="page2-card-title">View Web Report</div>
+                <div class="page2-desc">
+                    Scan this QR code to log in to your student dashboard and view your report in the website.
+                </div>
+
+                <div class="page2-qr-frame">
+                    <img id="page2-qr" src="assets/img/qr.png" alt="QR Code" class="page2-qr" />
+                </div>
+
+                <button type="button" class="page2-btn" onclick="onScanNextStudent()">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <span>Scan Next Student</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="page3" class="invisible">
+    page3
+</div>
+
+</body>
+</html>

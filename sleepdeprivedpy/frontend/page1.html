@@ -1,0 +1,58 @@
+<div id="page1" class="">
+    <div class="banner1">
+        <img src="assets/img/logo.png" class="logo" alt="Logo" />
+        <div class="project">Sleep Deprivation Detection System</div>
+    </div>
+
+    <div class="page1-body">
+        <div class="page1-left">
+            <div class="system-ready-card">
+                <div class="status-icon">
+                    <i class="fa-solid fa-camera"></i>
+                </div>
+                <div class="status-title">System Ready</div>
+                <div class="status-subtitle">Please enter your Student ID on the right to begin the scan.</div>
+            </div>
+            <img src="assets/img/video.png" alt="" id="page1-video" style="display: none;"/>
+            <div id="page1-timer" style="display: none;">5</div>
+        </div>
+
+        <div class="page1-right">
+            <input
+                id="student-id-display"
+                class="student-id-display"
+                type="text"
+                inputmode="numeric"
+                autocomplete="off"
+                autocapitalize="off"
+                spellcheck="false"
+                aria-label="Student ID"
+                readonly
+                value=""
+            />
+
+            <div class="keypad-grid" aria-label="Keypad">
+                <button class="keypad-btn" type="button" data-key="1">1</button>
+                <button class="keypad-btn" type="button" data-key="2">2</button>
+                <button class="keypad-btn" type="button" data-key="3">3</button>
+                <button class="keypad-btn" type="button" data-key="4">4</button>
+                <button class="keypad-btn" type="button" data-key="5">5</button>
+                <button class="keypad-btn" type="button" data-key="6">6</button>
+                <button class="keypad-btn" type="button" data-key="7">7</button>
+                <button class="keypad-btn" type="button" data-key="8">8</button>
+                <button class="keypad-btn" type="button" data-key="9">9</button>
+
+                <button class="keypad-btn keypad-btn-danger keypad-btn-wide" type="button" data-action="backspace" aria-label="Backspace">
+                    <i class="fa-solid fa-delete-left"></i>
+                </button>
+                <button class="keypad-btn" type="button" data-key="0">0</button>
+                <button class="keypad-btn" type="button" data-key="-">-</button>
+            </div>
+
+            <button class="start-scan" type="button" onclick="onStartScan()">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Start Scan</span>
+            </button>
+        </div>
+    </div>
+</div>
