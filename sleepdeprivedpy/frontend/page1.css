@@ -96,6 +96,13 @@
   color: #8C0001;
 }
 
+.student-id-display::placeholder {
+  font-size: 1.25rem;
+  font-weight: normal;
+  letter-spacing: normal;
+  color: #a0aab5;
+}
+
 .keypad-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

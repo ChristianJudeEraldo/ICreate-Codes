@@ -98,6 +98,13 @@
     font-weight: 900;
     letter-spacing: 0.2rem;
     color: #8C0001;
+
+    &::placeholder {
+        font-size: 1.25rem;
+        font-weight: normal;
+        letter-spacing: normal;
+        color: #a0aab5;
+    }
 }
 
 .keypad-grid {
