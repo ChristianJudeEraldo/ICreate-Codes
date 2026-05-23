@@ -173,3 +173,56 @@
   padding: 0.5rem 1rem;
   border-radius: 0.85rem;
 }
+
+/* --- Sleep Hours Input Styles --- */
+.sleep-hours-container {
+  background: #ffffff;
+  border-radius: 0.85rem;
+  padding: 1rem;
+  border: 2px solid #e0e5ec;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.sleep-hours-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2c3a46;
+}
+
+.sleep-hours-input {
+  width: 100%;
+  padding: 0.85rem;
+  border-radius: 0.5rem;
+  border: 2px solid #c6cbd3;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #8C0001; /* LPU Red for the inputted number */
+  background-color: #f8fafc;
+  outline: none;
+  transition: all 0.2s;
+  text-align: center; /* Centers the number */
+}
+
+.sleep-hours-input::placeholder {
+  color: #a0aab5;
+  font-weight: 500;
+}
+
+.sleep-hours-input:focus {
+  border-color: #8C0001;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(140, 0, 1, 0.1);
+}
+
+/* Highlights the currently active input box */
+.student-id-display:focus,
+.sleep-hours-input:focus {
+    border-color: #8C0001 !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 0 0 4px rgba(140, 0, 1, 0.15) !important;
+    transition: all 0.2s ease-in-out;
+}

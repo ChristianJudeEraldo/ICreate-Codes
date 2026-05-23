@@ -51,7 +51,7 @@
     </div>
 
     <div class="page0-footer">
-        <small>Powered by NeuralLink Systems</small>
+        <small>CNN-Based Facial Recognition System</small>
     </div>
 </div>
 <div id="page1" class="invisible">
@@ -109,6 +109,18 @@
                 </button>
                 <button class="keypad-btn" type="button" data-key="0">0</button>
                 <button class="keypad-btn" type="button" data-key="-">-</button>
+            </div>
+
+            <div class="sleep-hours-container">
+                <label for="sleepHoursInput" class="sleep-hours-label">How many hours of sleep did you get? <span style="color: #8C0001;">*</span></label>
+                <input 
+                    type="text" 
+                    id="sleepHoursInput" 
+                    class="sleep-hours-input" 
+                    inputmode="numeric" 
+                    maxlength="2" 
+                    placeholder="Ex. 6" 
+                    required>
             </div>
 
             <button class="start-scan" type="button" onclick="onStartScan()">
@@ -178,25 +190,110 @@
 <div id="page3" class="invisible">
     page3
 </div>
-<div id="page4" class="invisible">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="stylesheet" href="page4.css">
+
+<div id="page4">
     <div class="banner1">
-        <img src="assets/img/logo.png" class="logo" alt="Logo" />
-        <div class="project">Sleep Deprivation Detection System</div>
+        <div class="banner-content">
+            <button class="back-btn" onclick="goToPage('page0.html')">
+                <i class="fa-solid fa-arrow-left"></i> Back
+            </button>
+            <div class="project-title">Student Registration</div>
+        </div>
     </div>
 
-    <div class="page0-body">
-        <div class="page0-card">
-            <h1 class="page0-title">Register</h1>
-            <p class="page0-subtitle">Registration page placeholder.</p>
-            <div class="page0-btn-group">
-                <button class="page0-btn" onclick="goToPage('page0.html')">
-                    <i class="fa-solid fa-arrow-left" style="font-size: 2rem; margin-bottom: 0.5rem; display: block;"></i>
-                    <span>Back</span>
+    <div class="page4-body">
+        <div class="page4-card">
+            <div class="card-header-accent"></div>
+            <h2 class="form-title">Create Account</h2>
+            <p class="form-subtitle">Join the early detection health monitoring network.</p>
+
+            <div id="registrationMessage" class="alert-box d-none"></div>
+
+            <form id="prototypeRegForm">
+                <h3 class="section-title"><i class="fa-solid fa-graduation-cap"></i> Academic Information</h3>
+                
+                <div class="input-group">
+                    <label>Full Name <span class="req">*</span></label>
+                    <input type="text" id="regFullName" placeholder="Ex. Juan A. Dela Cruz" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Student I.D. <span class="req">*</span></label>
+                        <input type="text" id="regStudentId" placeholder="202X-X-XXXXX" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Department / College <span class="req">*</span></label>
+                        <select id="regDepartment" required>
+                            <option value="" selected disabled>Select Department</option>
+                            <option value="CAMS">CAMS</option>
+                            <option value="CBA">CBA</option>
+                            <option value="CCS">CCS</option>
+                            <option value="CEA">CEA</option>
+                            <option value="CFAD">CFAD</option>
+                            <option value="CITHM">CITHM</option>
+                            <option value="CLAE">CLAE</option>
+                            <option value="CON">CON</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>LPU Email <span class="req">*</span></label>
+                    <input type="email" id="regEmail" placeholder="student@lpunetwork.edu.ph" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Password <span class="req">*</span></label>
+                        <input type="password" id="regPassword" minlength="8" placeholder="Min 8 chars, 1 uppercase, 1 symbol" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Confirm Password <span class="req">*</span></label>
+                        <input type="password" id="regConfirmPassword" required>
+                    </div>
+                </div>
+
+                <h3 class="section-title mt-4"><i class="fa-solid fa-shield-heart"></i> Guardian Information</h3>
+                
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Guardian Name <span class="req">*</span></label>
+                        <input type="text" id="regGuardianName" placeholder="Ex. Maria Dela Cruz" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Contact Number <span class="req">*</span></label>
+                        <div class="phone-input">
+                            <span class="prefix">+63</span>
+                            <input type="tel" id="regGuardianContact" placeholder="9123456789" maxlength="10" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="consent-box">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="regSmsConsent" required>
+                        <span class="checkmark"></span>
+                        <p>I authorize the system to send <strong>automated health alerts</strong> to my guardian.</p>
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="regDataConsent" required>
+                        <span class="checkmark"></span>
+                        <p>I agree to the collection of facial scans for authorized <strong>health monitoring</strong>.</p>
+                    </label>
+                </div>
+
+                <button type="submit" id="regSubmitBtn" class="premium-btn">
+                    <i class="fa-solid fa-user-check"></i> Register Student
                 </button>
-            </div>
+            </form>
         </div>
     </div>
 </div>
+
+<script type="module" src="js/page4-register.js"></script>
 
 </body>
 </html>

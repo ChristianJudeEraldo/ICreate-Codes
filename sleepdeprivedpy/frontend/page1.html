@@ -55,6 +55,18 @@
                 <button class="keypad-btn" type="button" data-key="-">-</button>
             </div>
 
+            <div class="sleep-hours-container">
+                <label for="sleepHoursInput" class="sleep-hours-label">How many hours of sleep did you get? <span style="color: #8C0001;">*</span></label>
+                <input 
+                    type="text" 
+                    id="sleepHoursInput" 
+                    class="sleep-hours-input" 
+                    inputmode="numeric" 
+                    maxlength="2" 
+                    placeholder="Ex. 6" 
+                    required>
+            </div>
+
             <button class="start-scan" type="button" onclick="onStartScan()">
                 <i class="fa-solid fa-circle-check"></i>
                 <span>Start Scan</span>

@@ -2,7 +2,29 @@
 function onStartScan() {
     const input = document.getElementById('student-id-display') || document.querySelector('.student-id-display');
     const studentId = input ? String(input.value || '') : '';
-    eel.start_scan(studentId);
+
+    // 1. Validate Student ID
+    if (!studentId) {
+        alert("Please enter your Student ID.");
+        return;
+    }
+
+    // 2. Validate Sleep Hours
+    const sleepInput = document.getElementById('sleepHoursInput');
+    const sleepHours = sleepInput ? sleepInput.value.trim() : '';
+
+    if (!sleepHours) {
+        alert("Please enter how many hours of sleep you got last night.");
+        return;
+    }
+
+    if (parseInt(sleepHours) > 24) {
+        alert("Please enter a valid number of hours (0-24).");
+        return;
+    }
+
+    // 3. Send BOTH pieces of data to your Python backend!
+    eel.start_scan(studentId, sleepHours);
 }
 
 // Page 2 ---------------------------------------------------
@@ -11,37 +33,68 @@ function onScanNextStudent() {
 }
 
 function setupPage1Keypad() {
-    const input = document.getElementById('student-id-display') || document.querySelector('.student-id-display');
+    const idInput = document.getElementById('student-id-display');
+    const sleepInput = document.getElementById('sleepHoursInput');
     const keypad = document.querySelector('.keypad-grid');
-    if (!input || !keypad) return;
+    
+    if (!keypad) return;
+
+    // Track which input is currently active (Default to Student ID)
+    let activeInput = idInput;
+
+    // Listen for when the user taps either input box
+    if (idInput) {
+        idInput.addEventListener('focus', () => { activeInput = idInput; });
+    }
+    if (sleepInput) {
+        sleepInput.addEventListener('focus', () => { activeInput = sleepInput; });
+    }
 
     const focusInput = () => {
+        if (!activeInput) return;
         try {
-            input.focus({ preventScroll: true });
+            activeInput.focus({ preventScroll: true });
         } catch {
-            input.focus();
+            activeInput.focus();
         }
     };
 
     keypad.addEventListener('click', (e) => {
         const btn = e.target && e.target.closest ? e.target.closest('button') : null;
-        if (!btn || !keypad.contains(btn)) return;
+        if (!btn || !keypad.contains(btn) || !activeInput) return;
 
         const action = btn.getAttribute('data-action');
         if (action === 'backspace') {
-            input.value = input.value.slice(0, -1);
+            activeInput.value = activeInput.value.slice(0, -1);
             focusInput();
             return;
         }
 
         const key = btn.getAttribute('data-key');
         if (key != null && key !== '') {
-            input.value = input.value + key;
+            // Prevent typing past the max length (e.g., 2 characters for sleep hours)
+            if (activeInput.maxLength > 0 && activeInput.value.length >= activeInput.maxLength) {
+                focusInput();
+                return; 
+            }
+            activeInput.value = activeInput.value + key;
             focusInput();
         }
     });
 
-    focusInput();
+    // Start with the Student ID focused
+    if (idInput) focusInput();
+}
+
+// Setup function to block letters in the Sleep Hours input
+function setupSleepHoursInput() {
+    const sleepInput = document.getElementById('sleepHoursInput');
+    if (sleepInput) {
+        sleepInput.addEventListener('input', function() {
+            // Instantly deletes anything that isn't a number 0-9
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+    }
 }
 
 // -----------------------
@@ -68,7 +121,11 @@ function onMinimizeButtonClicked() {
 
 // Initialize any non-inline wiring
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setupPage1Keypad);
+    document.addEventListener('DOMContentLoaded', () => {
+        setupPage1Keypad();
+        setupSleepHoursInput(); // Activates the number block
+    });
 } else {
     setupPage1Keypad();
+    setupSleepHoursInput(); // Activates the number block
 }
