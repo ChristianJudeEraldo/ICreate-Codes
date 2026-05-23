@@ -1,0 +1,171 @@
+/* Global Resets & Fonts */
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+#page0 {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f4f7f6 0%, #e0e5ec 100%);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Banner Styling */
+.banner1 {
+    background-color: #ffffff;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.04);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.banner-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    height: 45px;
+    width: auto;
+}
+
+.project-title {
+    font-size: 1.8rem;         
+    font-weight: 800;          
+    color: #ffffff;            
+    letter-spacing: 1.5px;    
+    text-transform: uppercase; 
+    margin-left: 10px;         
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); 
+}
+
+/* Main Body & Card */
+.page0-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.page0-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 3.5rem 3rem;
+    text-align: center;
+    max-width: 650px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.card-header-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background-color: #8c0001; /* LPU Red */
+}
+
+/* Typography */
+.page0-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #2d3436;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+}
+
+.page0-subtitle {
+    font-size: 1.1rem;
+    color: #636e72;
+    margin-bottom: 3rem;
+    font-weight: 400;
+}
+
+/* Buttons */
+.page0-btn-group {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap; /* Ensures mobile responsiveness */
+}
+
+.page0-btn {
+    border: none;
+    border-radius: 12px;
+    padding: 2rem 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: #8c0001;
+    color: #ffffff;
+    min-width: 200px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(140, 0, 1, 0.2);
+}
+
+.page0-btn .icon-wrapper {
+    background: rgba(255, 255, 255, 0.15);
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.page0-btn i {
+    font-size: 1.8rem;
+}
+
+.page0-btn:hover {
+    background-color: #700001;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(140, 0, 1, 0.3);
+}
+
+.page0-btn:hover .icon-wrapper {
+    transform: scale(1.1);
+}
+
+/* Secondary Button Styling */
+.page0-btn-outline {
+    background-color: #ffffff;
+    color: #8c0001;
+    border: 2px solid #8c0001;
+    box-shadow: none;
+}
+
+.page0-btn-outline .icon-wrapper {
+    background: rgba(140, 0, 1, 0.08);
+}
+
+.page0-btn-outline:hover {
+    background-color: #fff9f9;
+    box-shadow: 0 8px 25px rgba(140, 0, 1, 0.15);
+}
+
+/* Footer Attribution */
+.page0-footer {
+    text-align: center;
+    padding: 1.5rem;
+    color: #a0aab2;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}

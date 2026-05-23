@@ -94,7 +94,7 @@ def html_update():
 def Initialize():
     while True:
         try:
-            eel.goToPage("page1.html")
+            eel.goToPage("page0.html")
             print("Initialized")
             break
         except Exception:

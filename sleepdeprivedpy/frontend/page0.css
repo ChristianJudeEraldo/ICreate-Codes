@@ -1,0 +1,164 @@
+/* Premium LPU-C Landing Page CSS */
+* {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  text-decoration: none;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#page0 {
+  min-height: 100vh;
+  background: #f0f4f8; /* Soft, premium light background */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Modern Banner */
+.banner1 {
+  background: linear-gradient(135deg, #8c0001 0%, #630000 100%); /* Deep premium red gradient */
+  box-shadow: 0 4px 20px rgba(140, 0, 1, 0.15);
+  padding: 1.2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.banner-content {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.logo {
+  height: 48px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.project-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Main Body Area */
+.page0-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Premium Glass/Soft Card */
+.page0-card {
+  background: #ffffff;
+  border-radius: 24px; /* Sleek, modern curves */
+  padding: 4rem 3.5rem;
+  text-align: center;
+  max-width: 680px;
+  width: 100%;
+  /* Layered soft shadows create depth without harsh lines */
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05), 0 4px 15px rgba(0, 0, 0, 0.03); 
+  position: relative;
+}
+
+.page0-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #1e293b; /* Premium dark slate */
+  margin-bottom: 0.5rem;
+  letter-spacing: -1px;
+}
+
+.page0-subtitle {
+  font-size: 1.15rem;
+  color: #64748b; /* Soft blue-gray */
+  margin-bottom: 3.5rem;
+  font-weight: 400;
+}
+
+/* Button Layout */
+.page0-btn-group {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Base Button Styles */
+.page0-btn {
+  border: none;
+  border-radius: 16px;
+  padding: 1.8rem 2rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 220px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.icon-wrapper {
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+/* Primary Button (Initiate Scan) */
+.page0-btn:not(.page0-btn-outline) {
+  background: linear-gradient(145deg, #8c0001, #700000);
+  color: #ffffff;
+  box-shadow: 0 10px 25px rgba(140, 0, 1, 0.25);
+}
+
+.page0-btn:not(.page0-btn-outline):hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(140, 0, 1, 0.35);
+  background: linear-gradient(145deg, #9e0002, #8c0001);
+}
+
+.page0-btn:not(.page0-btn-outline):hover .icon-wrapper {
+  transform: scale(1.15);
+}
+
+/* Secondary Button (Register User) */
+.page0-btn-outline {
+  background: #ffffff;
+  color: #8c0001;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+}
+
+.page0-btn-outline:hover {
+  border-color: #8c0001;
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(140, 0, 1, 0.1);
+  background: #fffcfc;
+}
+
+.page0-btn-outline:hover .icon-wrapper {
+  transform: scale(1.15);
+}
+
+/* Footer */
+.page0-footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}

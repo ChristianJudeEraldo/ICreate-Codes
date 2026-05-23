@@ -10,6 +10,7 @@
     <script type="text/javascript" src="/functions.js"></script>
     <link rel="stylesheet" href="/assets/css/framework.css">
     <link rel="stylesheet" href="/assets/css/canon.css">
+    <link rel="stylesheet" href="/page0.css">
     <link rel="stylesheet" href="/page1.css">
     <link rel="stylesheet" href="/page2.css">
     <link rel="stylesheet" href="/page3.css">
@@ -17,10 +18,51 @@
 
 <body style="width: 100vw; height: 100vh;" class="">
 
-<div id="page1" class="">
+<div id="page0">
+    <div class="banner1">
+        <div class="banner-content">
+            <img src="assets/img/logo.png" class="logo" alt="LPU-C Logo" />
+            <div class="project-title">Sleep Deprivation Detection System</div>
+        </div>
+    </div>
+
+    <div class="page0-body">
+        <div class="page0-card shadow-lg">
+            <div class="card-header-accent"></div>
+            <h1 class="page0-title">Welcome</h1>
+            <p class="page0-subtitle">Please select an action to proceed with the health scan.</p>
+            
+            <div class="page0-btn-group">
+                <button class="page0-btn" onclick="goToPage('page1.html')">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-camera"></i>
+                    </div>
+                    <span>Initiate Scan</span>
+                </button>
+                
+                <button class="page0-btn page0-btn-outline" onclick="goToPage('page4.html')">
+                    <div class="icon-wrapper">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </div>
+                    <span>Register User</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="page0-footer">
+        <small>Powered by NeuralLink Systems</small>
+    </div>
+</div>
+<div id="page1" class="invisible">
     <div class="banner1">
         <img src="assets/img/logo.png" class="logo" alt="Logo" />
         <div class="project">Sleep Deprivation Detection System</div>
+        <div style="flex-grow: 1;"></div>
+        <button class="page0-btn" style="padding: 0.5rem 1rem; font-size: 1rem; min-width: auto; flex-direction: row; gap: 0.5rem;" onclick="goToPage('page0.html')">
+            <i class="fa-solid fa-arrow-left" style="margin: 0; font-size: 1.2rem;"></i>
+            <span>Back</span>
+        </button>
     </div>
 
     <div class="page1-body">
@@ -135,6 +177,25 @@
 </div>
 <div id="page3" class="invisible">
     page3
+</div>
+<div id="page4" class="invisible">
+    <div class="banner1">
+        <img src="assets/img/logo.png" class="logo" alt="Logo" />
+        <div class="project">Sleep Deprivation Detection System</div>
+    </div>
+
+    <div class="page0-body">
+        <div class="page0-card">
+            <h1 class="page0-title">Register</h1>
+            <p class="page0-subtitle">Registration page placeholder.</p>
+            <div class="page0-btn-group">
+                <button class="page0-btn" onclick="goToPage('page0.html')">
+                    <i class="fa-solid fa-arrow-left" style="font-size: 2rem; margin-bottom: 0.5rem; display: block;"></i>
+                    <span>Back</span>
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>
