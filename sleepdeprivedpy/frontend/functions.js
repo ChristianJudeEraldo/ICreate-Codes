@@ -100,6 +100,52 @@ function setupSleepHoursInput() {
 // -----------------------
 // App / Global Buttons
 // -----------------------
+// -----------------------
+// Network Status Indicator
+// -----------------------
+function setupNetworkIndicator() {
+    // Create the visual badge
+    const badge = document.createElement('div');
+    badge.id = 'network-status-badge';
+    document.body.appendChild(badge);
+
+    // visual badge styling 
+    Object.assign(badge.style, {
+        position: 'fixed',
+        bottom: '20px',
+        left: '20px',
+        padding: '8px 16px',
+        borderRadius: '20px',
+        fontSize: '0.85rem',
+        fontWeight: '700',
+        color: 'white',
+        zIndex: '9999',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+        transition: 'all 0.3s ease',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+        fontFamily: "'Segoe UI', sans-serif"
+    });
+
+    // changes colors based on internet status
+    function updateStatus() {
+        if (navigator.onLine) {
+            badge.style.backgroundColor = '#10b981'; // Premium Green
+            badge.innerHTML = '<i class="fa-solid fa-wifi"></i> System Online';
+        } else {
+            badge.style.backgroundColor = '#8c0001'; // LPU Red for Offline Warning
+            badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Offline Mode';
+        }
+    }
+
+    // Listener for changes in network status
+    window.addEventListener('online', updateStatus);
+    window.addEventListener('offline', updateStatus);
+
+    // set the initial status
+    updateStatus();
+}
 
 function onSkipButtonClicked() {
     if (typeof eel !== 'undefined' && eel.handle_skip_button) {
@@ -123,9 +169,11 @@ function onMinimizeButtonClicked() {
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         setupPage1Keypad();
-        setupSleepHoursInput(); // Activates the number block
+            setupSleepHoursInput(); // Activates the number block
+            setupNetworkIndicator(); // Turns on the Wi-Fi tracker
     });
 } else {
     setupPage1Keypad();
     setupSleepHoursInput(); // Activates the number block
+    setupNetworkIndicator(); // Turns on the Wi-Fi tracker
 }

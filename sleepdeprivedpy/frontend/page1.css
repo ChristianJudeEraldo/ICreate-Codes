@@ -14,11 +14,16 @@
 }
 
 .banner1 .logo {
-  width: 70px;
+  width: auto;
+  height: 52px;
+  max-width: 72px;
+  object-fit: contain;
+  display: block;
   background-color: white;
-  padding: 4px;
+  padding: 2px 6px;
   border-radius: 0.5rem;
   margin-right: 0.75rem;
+  flex-shrink: 0;
 }
 
 .banner1 .project {
