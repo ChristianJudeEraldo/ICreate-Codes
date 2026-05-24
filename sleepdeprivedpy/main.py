@@ -1,6 +1,7 @@
 import json 
 import threading
 import time
+from datetime import datetime, timezone
 import eel
 from livereload import Server
 import sass
@@ -52,6 +53,35 @@ def get_registered_ids():
     except Exception as e:
         print(f"Error loading registered IDs: {e}")
     return [] 
+
+
+def _doc_timestamp_to_local_date(value):
+    if not isinstance(value, datetime):
+        return None
+
+    if value.tzinfo is None:
+        value = value.replace(tzinfo=timezone.utc)
+
+    return value.astimezone().date().isoformat()
+
+
+def student_scanned_today(student_id, scan_date):
+    """Checks whether the student already has a scan record for the current local day."""
+    try:
+        docs = db.collection('sleep_logs').where('student_id', '==', student_id).stream()
+
+        for doc in docs:
+            scan_data = doc.to_dict() or {}
+            if scan_data.get('scan_date') == scan_date:
+                return True
+
+            timestamp_date = _doc_timestamp_to_local_date(scan_data.get('timestamp'))
+            if timestamp_date == scan_date:
+                return True
+    except Exception as e:
+        print(f"Error checking existing scan records: {e}")
+
+    return False
 
 # --- INITIALIZE FIRESTORE ---
 try:
@@ -182,6 +212,7 @@ def start_scan(student_id, sleep_hours):
     global StudentID
     # --- to prevent accidental mismatches ---
     StudentID = student_id.strip() 
+    scan_date = datetime.now().astimezone().date().isoformat()
     
     # 1. Existing Check: Is the input completely empty?
     if StudentID == "":
@@ -204,6 +235,16 @@ def start_scan(student_id, sleep_hours):
             {"outsideClickClose": True, "autoCloseMs": 0},
         )()
         return {"success": False, "error": "Unregistered student ID"}
+
+    if student_scanned_today(StudentID, scan_date):
+        print(f"Blocked duplicate scan attempt for ID: {StudentID} on {scan_date}")
+        eel.openWarningDialog(
+            "Daily Scan Limit Reached",
+            f"Student ID {StudentID} already has a scan record for today. You can scan again tomorrow.",
+            [],
+            {"outsideClickClose": True, "autoCloseMs": 0},
+        )()
+        return {"success": False, "error": "Student already scanned today"}
     
     # --- If it passes both checks, start the scan! ---
     print(f"Start scan requested for student ID: {StudentID} | Self-reported sleep: {sleep_hours} hours")
@@ -369,6 +410,7 @@ def start_scan(student_id, sleep_hours):
                             'confidence': confidence if confidence is not None else 0,
                             'imageUrl': base64_string,
                             'self_reported_sleep_hours': safe_sleep_hours,
+                            'scan_date': scan_date,
                             'timestamp': firestore.SERVER_TIMESTAMP
                         })
                 except Exception as e:
