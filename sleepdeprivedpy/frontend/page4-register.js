@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = document.getElementById('regPassword').value;
         const confirmPassword = document.getElementById('regConfirmPassword').value;
         const guardianName = document.getElementById('regGuardianName').value.trim();
+        const guardianEmail = document.getElementById('regGuardianEmail').value.trim();
         const guardianContact = document.getElementById('regGuardianContact').value.trim();
         
         const smsConsent = document.getElementById('regSmsConsent').checked;
@@ -89,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 studentId: studentId,
                 schoolEmail: schoolEmail,
                 guardianName: guardianName,
+                guardianEmail: guardianEmail,
                 guardianContact: formattedContact,
                 smsConsent: smsConsent,
                 dataConsent: dataConsent,
