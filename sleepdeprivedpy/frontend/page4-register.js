@@ -22,6 +22,81 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- VIRTUAL KEYBOARD INITIALIZATION ---
+    const Keyboard = window.SimpleKeyboard.default;
+    let selectedInput;
+
+    const keyboard = new Keyboard({
+      onChange: input => onChange(input),
+      onKeyPress: button => onKeyPress(button),
+      layout: {
+        'default': [
+          '1 2 3 4 5 6 7 8 9 0 {bksp}',
+          'q w e r t y u i o p',
+          'a s d f g h j k l',
+          '{shift} z x c v b n m . @',
+          '{space} {hide}'
+        ],
+        'shift': [
+          '! @ # $ % ^ & - ( ) {bksp}',
+          'Q W E R T Y U I O P',
+          'A S D F G H J K L',
+          '{shift} Z X C V B N M . @',
+          '{space} {hide}'
+        ]
+      },
+      display: {
+        '{bksp}': '⌫',
+        '{shift}': '⇧ Shift',
+        '{space}': 'Space',
+        '{hide}': '⬇ Hide'
+      }
+    });
+
+    // Attach listeners to all inputs
+    document.querySelectorAll("input").forEach(input => {
+      // Exclude checkboxes from triggering the keyboard
+      if(input.type !== 'checkbox') {
+          input.addEventListener("focus", onInputFocus);
+          input.addEventListener("click", onInputFocus);
+      }
+    });
+
+    function onInputFocus(event) {
+      selectedInput = event.target.id;
+      
+      // Update the keyboard to match the current value of the selected input
+      keyboard.setOptions({
+        inputName: event.target.id
+      });
+      
+      // Slide the keyboard up
+      document.getElementById('keyboard-wrapper').classList.add('show-keyboard');
+    }
+
+    function onChange(input) {
+      const activeElement = document.getElementById(selectedInput);
+      if (activeElement) {
+          activeElement.value = input;
+          // Fire an input event so your ID formatter and validation still work
+          activeElement.dispatchEvent(new Event('input')); 
+      }
+    }
+
+    function onKeyPress(button) {
+      if (button === "{shift}") handleShift();
+      if (button === "{hide}") {
+          document.getElementById('keyboard-wrapper').classList.remove('show-keyboard');
+      }
+    }
+
+    function handleShift() {
+      let currentLayout = keyboard.options.layoutName;
+      let shiftToggle = currentLayout === "default" ? "shift" : "default";
+      keyboard.setOptions({ layoutName: shiftToggle });
+    }
+    // --- END VIRTUAL KEYBOARD ---
+
     if (!regForm) return;
 
     regForm.addEventListener('submit', async (e) => {

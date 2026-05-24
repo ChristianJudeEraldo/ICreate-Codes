@@ -119,3 +119,37 @@
 .alert-success { background: #dcfce3; color: #166534; border: 1px solid #86efac; }
 .alert-info { background: #e0f2fe; color: #075985; border: 1px solid #7dd3fc; }
 .d-none { display: none; }
+
+/* --- Virtual Keyboard Styles --- */
+.keyboard-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #e2e8f0;
+  padding: 10px;
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  /* Hides the keyboard off-screen by default */
+  transform: translateY(100%); 
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Add this class via JS to slide the keyboard up */
+.keyboard-wrapper.show-keyboard {
+  transform: translateY(0);
+}
+
+/* Make buttons slightly more compact for the 480px height screen */
+.hg-theme-default .hg-button {
+  height: 45px !important; 
+  font-weight: 600;
+  color: #2c3a46;
+}
+
+/* Style the special keys to match your LPU Red theme */
+.hg-theme-default .hg-button.hg-standardBtn.hg-button-enter,
+.hg-theme-default .hg-button.hg-standardBtn.hg-button-shift {
+  background-color: #8C0001;
+  color: white;
+}

@@ -353,9 +353,30 @@ def start_scan(student_id, sleep_hours):
                         confidence = random.randint(60, 100)
                 else:
                     label_norm = str(label).strip().lower().replace(" ", "")
-                    is_deprived = label_norm in {"fatigue", "sleepy"}
-                    is_normal = label_norm in {"active", "wellrested"}
 
+                    # "Deprivation Level" (0-100%)
+                    if label_norm in {"active", "wellrested", "normal"}:
+                        # If YOLO is 80% sure they are rested, they are 20% deprived.
+                        fatigue_score = 100 - confidence 
+                    else:
+                        # If YOLO says sleepy, the confidence IS the fatigue score.
+                        fatigue_score = confidence
+                    
+                    # --- SYSTEM 70% THRESHOLD ---
+                    CONFIDENCE_THRESHOLD = 70 
+                    
+                    if fatigue_score >= CONFIDENCE_THRESHOLD:
+                        is_deprived = True
+                        is_normal = False
+                    else:
+                        is_deprived = False
+                        is_normal = True
+                        if label_norm in {"fatigue", "sleepy"}:
+                            print(f"Threshold Override: Deprivation score ({fatigue_score}%) < {CONFIDENCE_THRESHOLD}%. Defaulting to Normal.")
+                     
+                    # only receive the unified Fatigue Score.
+                    confidence = fatigue_score
+            
                 try:
                     target_folder = "sleepy" if is_deprived else "alert"
                     timestamp = int(time.time())
