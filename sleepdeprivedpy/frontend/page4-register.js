@@ -14,6 +14,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const msgDiv = document.getElementById('registrationMessage');
     const submitBtn = document.getElementById('regSubmitBtn');
 
+    // Toggle Password Visibility
+    const toggleRegPwd = document.getElementById('toggleRegPwd');
+    const toggleRegConfirmPwd = document.getElementById('toggleRegConfirmPwd');
+
+    if (toggleRegPwd) {
+        toggleRegPwd.addEventListener('click', function () {
+            const pwdInput = document.getElementById('regPassword');
+            const type = pwdInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            pwdInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    }
+
+    if (toggleRegConfirmPwd) {
+        toggleRegConfirmPwd.addEventListener('click', function () {
+            const confirmPwdInput = document.getElementById('regConfirmPassword');
+            const type = confirmPwdInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            confirmPwdInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    }
+
     // ID Formatter (Numbers only)
     const idInput = document.getElementById('regStudentId');
     if(idInput) {

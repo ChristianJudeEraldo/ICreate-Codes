@@ -120,6 +120,31 @@
 .alert-info { background: #e0f2fe; color: #075985; border: 1px solid #7dd3fc; }
 .d-none { display: none; }
 
+/* Password Visibility Toggle */
+.pwd-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.pwd-wrapper input {
+    width: 100%;
+    padding-right: 40px !important; /* Space for the icon */
+    box-sizing: border-box;
+}
+.pwd-wrapper .toggle-password {
+    position: absolute;
+    right: 15px;
+    cursor: pointer;
+    color: #64748b;
+    font-size: 1.1rem;
+    transition: color 0.2s;
+    user-select: none;
+}
+.pwd-wrapper .toggle-password:hover {
+    color: #1e293b;
+}
+
 /* --- Virtual Keyboard Styles --- */
 .keyboard-wrapper {
   position: fixed;
