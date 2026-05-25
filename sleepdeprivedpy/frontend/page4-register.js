@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Attach listeners to all inputs
-    document.querySelectorAll("input").forEach(input => {
+    // Attach listeners to only page4 inputs
+    document.querySelectorAll("#page4 input").forEach(input => {
       // Exclude checkboxes from triggering the keyboard
       if(input.type !== 'checkbox') {
           input.addEventListener("focus", onInputFocus);

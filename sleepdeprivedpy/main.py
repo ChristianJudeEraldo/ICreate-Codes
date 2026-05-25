@@ -259,22 +259,28 @@ def start_scan(student_id, sleep_hours):
             eel.updateElementByAttribute("page1-timer", 'innerHTML', str(5 - i))
             time.sleep(1)
 
-        # --- Sensor check ---
+            # --- Sensor check ---
         try:
-            SerialData.write(bytes("!GET_SENSOR_READINGS@", "utf-8"))
+            if SerialData is not None:
+                SerialData.write(bytes("!GET_SENSOR_READINGS@", "utf-8"))
 
-            response = ""
-            while True:
-                recv = SerialData.read().decode('utf-8', errors='ignore')
-                if recv == "!":
-                    response = ""
-                elif recv == "@":
-                    break
-                else:
-                    response += recv
+                response = ""
+                while True:
+                    recv = SerialData.read().decode('utf-8', errors='ignore')
+                    if recv == "!":
+                        response = ""
+                    elif recv == "@":
+                        break
+                    else:
+                        response += recv
 
-            # Parse response (format: maxTemp_dist)
-            temp, dist = parseParams(response)
+                # Parse response (format: maxTemp_dist)
+                temp, dist = parseParams(response)
+            else:
+                # If no Arduino is plugged in, fake the sensor data to test the camera.
+                print("DEVELOPER MODE: No Arduino detected. Mocking perfect sensor data.")
+                dist = 15.0  # Perfect distance
+                temp = 36.5  # Perfect temperature
 
             if dist <= 9.0:
                 eel.updateElementByAttribute("page1-timer", 'innerHTML', "No face detected. Try again")
@@ -330,52 +336,36 @@ def start_scan(student_id, sleep_hours):
                 # --- RULING LOGIC ---
                 is_deprived = False
                 is_normal = False
+                description_text = "Analysis complete."
 
-                if USE_DLIB_EAR:
-                    ear = None
-                    try:
-                        if hasattr(classifier, "get_landmarks_68_from_face_bgr"):
-                            landmarks = classifier.get_landmarks_68_from_face_bgr(face_crop)
-                            ear = _compute_ear_from_landmarks_68(landmarks) if landmarks else None
-                    except Exception as e:
-                        print(f"EAR landmarks error: {e}")
+                label_norm = str(label).strip().lower().replace(" ", "")
 
-                    if ear is None:
-                        eel.updateElementByAttribute("page1-timer", 'innerHTML', "Couldn't read eyes. Try again")
-                        return
-
-                    is_deprived = ear < EAR_THRESHOLD_DEPRIVED
-                    is_normal = not is_deprived
-                    if is_deprived:
-                        confidence = int(map_value(ear, 0.13, EAR_THRESHOLD_DEPRIVED, 100, 60))
-                        confidence = max(0, min(100, confidence))
-                    else:
-                        confidence = random.randint(60, 100)
+                # Calculate "Deprivation Level" (0-100%)
+                if label_norm in {"active", "wellrested", "normal"}:
+                    # If YOLO is sure they are rested, subtract from 100 to get fatigue score
+                    fatigue_score = 100 - confidence 
                 else:
-                    label_norm = str(label).strip().lower().replace(" ", "")
-
-                    # "Deprivation Level" (0-100%)
-                    if label_norm in {"active", "wellrested", "normal"}:
-                        # If YOLO is 80% sure they are rested, they are 20% deprived.
-                        fatigue_score = 100 - confidence 
-                    else:
-                        # If YOLO says sleepy, the confidence IS the fatigue score.
-                        fatigue_score = confidence
+                    # If YOLO says sleepy, the confidence IS the fatigue score
+                    fatigue_score = confidence
+                
+                # --- SYSTEM 70% THRESHOLD ---
+                CONFIDENCE_THRESHOLD = 70 
+                
+                if fatigue_score >= CONFIDENCE_THRESHOLD:
+                    is_deprived = True
+                    is_normal = False
+                    description_text = f"Fatigue score ({fatigue_score}%) exceeded the 70% detection threshold."
+                else:
+                    is_deprived = False
+                    is_normal = True
+                    description_text = f"Fatigue score ({fatigue_score}%) is below the 70% threshold."
                     
-                    # --- SYSTEM 70% THRESHOLD ---
-                    CONFIDENCE_THRESHOLD = 70 
-                    
-                    if fatigue_score >= CONFIDENCE_THRESHOLD:
-                        is_deprived = True
-                        is_normal = False
-                    else:
-                        is_deprived = False
-                        is_normal = True
-                        if label_norm in {"fatigue", "sleepy"}:
-                            print(f"Threshold Override: Deprivation score ({fatigue_score}%) < {CONFIDENCE_THRESHOLD}%. Defaulting to Normal.")
-                     
-                    # only receive the unified Fatigue Score.
-                    confidence = fatigue_score
+                    if label_norm in {"fatigue", "sleepy"}:
+                        print(f"Threshold Override: Deprivation score ({fatigue_score}%) < {CONFIDENCE_THRESHOLD}%. System Assessment: Normal.")
+                        description_text = f"Minor signs detected ({fatigue_score}%), but remains below the 70% threshold."
+                 
+                # Unify the output confidence to always represent the Fatigue Score
+                confidence = fatigue_score
             
                 try:
                     target_folder = "sleepy" if is_deprived else "alert"
@@ -429,6 +419,7 @@ def start_scan(student_id, sleep_hours):
                             'student_id': StudentID,
                             'status': "Deprived" if is_deprived else "Normal",
                             'confidence': confidence if confidence is not None else 0,
+                            'description': description_text,
                             'imageUrl': base64_string,
                             'self_reported_sleep_hours': safe_sleep_hours,
                             'scan_date': scan_date,
