@@ -227,14 +227,20 @@ def start_scan(student_id, sleep_hours):
     # Edge Validation Check: check if regisstered in the local JSON database 
     valid_ids = get_registered_ids()
     if StudentID not in valid_ids:
-        print(f"Blocked unauthorized scan attempt for ID: {StudentID}")
-        eel.openWarningDialog(
-            "Unregistered ID",
-            f"Student ID {StudentID} is not registered in the system. Please visit the clinic to register your emergency contact.",
-            [],
-            {"outsideClickClose": True, "autoCloseMs": 0},
-        )()
-        return {"success": False, "error": "Unregistered student ID"}
+        # Double check cloud in case of recent registration
+        print(f"ID {StudentID} not found locally. Triggering Cloud Sync to check for new registrations...")
+        sync_registered_students_from_cloud()
+        valid_ids = get_registered_ids()
+        
+        if StudentID not in valid_ids:
+            print(f"Blocked unauthorized scan attempt for ID: {StudentID}")
+            eel.openWarningDialog(
+                "Unregistered ID",
+                f"Student ID {StudentID} is not registered in the system. Please visit the clinic to register your emergency contact.",
+                [],
+                {"outsideClickClose": True, "autoCloseMs": 0},
+            )()
+            return {"success": False, "error": "Unregistered student ID"}
 
     if student_scanned_today(StudentID, scan_date):
         print(f"Blocked duplicate scan attempt for ID: {StudentID} on {scan_date}")
@@ -444,6 +450,7 @@ def scan_next():
     StudentID = ""
     eel.goToPage("page1.html")
     eel.setInput("student-id-display", "")
+    eel.setInput("sleepHoursInput", "")
     eel.hideElement("page1-video")
     eel.hideElement("page1-timer")
     eel.updateElementByAttribute("page1-timer", 'innerHTML', "5")
