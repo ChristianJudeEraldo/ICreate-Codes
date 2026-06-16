@@ -403,7 +403,7 @@ def start_scan(student_id, sleep_hours):
                 if confidence is not None:
                     eel.updateElementByAttribute("page2-confidence", 'innerHTML', f"{confidence}%")
                 else:
-                    eel.updateElementByAttribute("page2-confidence", 'innerHTML', "Confidence: N/A")
+                    eel.updateElementByAttribute("page2-confidence", 'innerHTML', "N/A")
                     
                 # BASE64 UPLOAD TO FIRESTORE
                 try:
